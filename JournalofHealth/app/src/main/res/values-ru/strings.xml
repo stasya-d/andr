@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Журнал Здоровья</string>
+    <string name="bn_add">Добавить результат</string>
+    <string name="bn_history">История</string>
+    <string name="tagline">Добро пожаловать в приложение Журнал Здоровья. Мы заботимся о Вас, чтобы Вы могли позаботиться о ком-нибудь другом.</string>
+    <string name="bn_cancel">Отмена</string>
+    <string name="bn_ok">ОК</string>
+    <string name="enter">Введите результат:</string>
+    <string name="add">Добавлено</string>
+    <string name="save">Сохранить</string>
+    <string name="interface_settings_language">Язык</string>
+    <string name="interface_settings_check_language">Выберите язык</string>
+    <string name="sugar">Сахар:</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="and">/</string>
+    <string name="bn_setting">Настройки</string>
+    <string name="questionDelete">Вы хотите удалить все записи?</string>
+    <string name="pulse">Пульс:</string>
+    <string name="pressure">Давление:</string>
+    <string name="pref_size">Размер</string>
+    <string name="pref_lng">Стиль</string>
+    <string name="title_activity_settings">Настройки</string>
+    <string name="interface_settings_set_new_fsize">Устанавливает новый размер шрифта</string>
+    <string name="Restart">Перезапуск</string>
+    <string name="LangTitle">Язык</string>
+    <string name="LangDialogTitle">Выберите язык:</string>
+    <string name="LangSummary">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
+    <string name="action_settings">Настройки</string>
+    <string name="language">Язык:</string>
+    <string name="list">Результаты:</string>
+    <string name="bn_delete_all">Очистить</string>
+    <string name="cancel">Отмена</string>
+    <string name="comment">Комментарий:</string>
+    <string name="deleting">Удаление</string>
+    <string name="deleted">Удалено.</string>
+    <string name="saved">Сохранено.</string>
+    <string name="notification_add">Добавьте результат!</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/colorTheDarkestGreen</item>
+        <item name="colorAccent">#000000</item>
+        <item name="android:colorBackground">@color/colorGreenBackground</item>
+        <item name="android:textColorPrimaryInverse">@color/colorGreen</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>
