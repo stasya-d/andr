@@ -6,7 +6,10 @@
     <string name="tagline">Добро пожаловать в приложение Журнал Здоровья. Мы заботимся о Вас, чтобы Вы могли позаботиться о ком-нибудь другом.</string>
     <string name="bn_cancel">Отмена</string>
     <string name="bn_ok">ОК</string>
+    <string name="bn_take_data_from_the_server">Забрать с сервера</string>
+    <string name="bn_synchronization">Синхронизация</string>
     <string name="enter">Введите результат:</string>
+    <string name="data">Данные:</string>
     <string name="add">Добавлено</string>
     <string name="save">Сохранить</string>
     <string name="interface_settings_language">Язык</string>

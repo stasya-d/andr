@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Journal of Health</string>
+    <string name="app_name">Health Journal</string>
     <string name="bn_add">Add result</string>
     <string name="bn_history">History</string>
-    <string name="tagline">Welcome to the application Journal of Health. We care about you, that you can care about someone else.</string>
+    <string name="tagline">Welcome to the application Health Journal. We care about you, that you can care about someone else.</string>
     <string name="bn_cancel">Cancel</string>
     <string name="bn_ok">OK</string>
+    <string name="bn_take_data_from_the_server">Take from server</string>
+    <string name="bn_synchronization">Synchronization</string>
+    <string name="data">Data:</string>
     <string name="enter">Enter results:</string>
     <string name="add">Add</string>
     <string name="save">Save</string>

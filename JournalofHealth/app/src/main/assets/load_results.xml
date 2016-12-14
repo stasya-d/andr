@@ -1,0 +1,17 @@
+<results>
+    <result>
+        <data>12-12-2000 00.00.00</data>
+        <high>120</high>
+        <low>80</low>
+        <pulse>70</pulse>
+        <sugar>5.0</sugar>
+        <comment>Good</comment>
+    </result>
+    <result>
+        <data>12-12-2000 00.00.01</data>
+        <high>180</high>
+        <low>80</low>
+        <sugar>5.0</sugar>
+        <comment>Bad</comment>
+    </result>
+</results>

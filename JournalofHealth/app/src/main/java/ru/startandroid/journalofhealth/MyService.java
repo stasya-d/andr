@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.IBinder;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.app.NotificationCompat;
@@ -57,11 +56,11 @@ public class MyService extends Service {
     }
 
     void sendNotif() {
-        Context context = getApplicationContext();
-        Intent notificationIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://developer.alexanderklimov.ru/android/"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-                notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+     //   Context context = getApplicationContext();
+     //   Intent notificationIntent = new Intent(Intent.ACTION_VIEW,
+     //           Uri.parse("http://developer.alexanderklimov.ru/android/"));
+     //   PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
+     //           notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)

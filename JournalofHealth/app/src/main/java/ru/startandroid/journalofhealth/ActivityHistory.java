@@ -3,11 +3,9 @@ package ru.startandroid.journalofhealth;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +40,7 @@ public class ActivityHistory extends Activity {
                 showDialog(DIALOG_DELETE);
             }
         });
-
+         //   ActivitySetting.
         updateList();
     }
 
@@ -138,21 +134,12 @@ public class ActivityHistory extends Activity {
 
 
             do {
-                String allInf = "";
-                if (c.getString(highColIndex).length() > 0) {
-                    allInf = getString(R.string.pressure) + " " + c.getString(highColIndex) + "/" + c.getString(lowColIndex) + "\n";
-                }
-                if (c.getString(pulseColIndex).length() > 0) {
-                    allInf = allInf + getString(R.string.pulse) + " " + c.getString(pulseColIndex) + "\n";
-                }
-                if (c.getString(sugarColIndex).length() > 0) {
-                    allInf = allInf + getString(R.string.sugar) + " " + c.getString(sugarColIndex) + "\n";
-                }
-                if (c.getString(commentColIndex).length() > 0) {
-                    allInf = allInf + getString(R.string.comment) + " " + c.getString(commentColIndex);
-                }
                 // получаем значения по номерам столбцов и пишем все в лог
-                persons.add(new BlankOfResult(allInf, c.getString(dateColIndex),
+                persons.add(new BlankOfResult(getString(R.string.pressure),
+                        getString(R.string.pulse),
+                        getString(R.string.sugar),
+                        getString(R.string.comment),
+                        c.getString(dateColIndex),
                         c.getString(highColIndex),
                         c.getString(lowColIndex),
                         c.getString(pulseColIndex),
@@ -174,31 +161,5 @@ public class ActivityHistory extends Activity {
         rv.setAdapter(adapter);
     }
 
-    class DBHelper extends SQLiteOpenHelper {
 
-        public DBHelper(Context context) {
-            // конструктор суперкласса
-            super(context, "myTable", null, 4);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            Log.d(LOG_TAG, "-------- onCreate database");
-            // создаем таблицу с полями
-            db.execSQL("create table myTable ("
-                    + "id integer primary key autoincrement,"
-                    + "data text,"
-                    + "high text,"
-                    + "low text,"
-                    + "pulse text,"
-                    + "sugar text,"
-                    + "comment text" + ");");
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS " + "myTable");
-            onCreate(db);
-        }
-    }
 }

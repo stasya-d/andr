@@ -54,5 +54,38 @@
             android:background="@drawable/hbutton"
             android:text="@string/save"
             android:textAppearance="@style/MyTextStyle" />
+        <TextView
+            android:id="@+id/text_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data"
+            android:textAppearance="@style/MyTextStyle" />
+        <Button
+            android:id="@+id/loadXML"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/hbutton"
+            android:text="XML"
+            android:textAppearance="@style/MyTextStyle"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/loadJSON"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/hbutton"
+            android:text="@string/bn_take_data_from_the_server"
+            android:textAppearance="@style/MyTextStyle"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/saveJSON"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/hbutton"
+            android:text="@string/bn_synchronization"
+            android:textAppearance="@style/MyTextStyle"
+            android:layout_marginTop="10dp" />
+
     </LinearLayout>
 </RelativeLayout>
