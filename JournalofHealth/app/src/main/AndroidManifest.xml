@@ -22,15 +22,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ActivityHistory"
+            android:name=".HistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ActivitySetting"
+            android:name=".SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".ActivityAdd"
+            android:name=".AddActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <service

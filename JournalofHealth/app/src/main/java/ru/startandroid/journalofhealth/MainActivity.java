@@ -16,22 +16,22 @@ public class MainActivity extends Activity {
     Button add;
     Button setting;
     public static String APP_PREFERENCES = "APP_P";
-    final String KEY_RADIOBUTTON_INDEX = "locale";
-    final String LOG_TAG = "myLogs";
+    static final String PREF_SETTING_LOCALE = "locale";
+    public final String LOG_TAG = "myLogs";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //startService(new Intent(MainActivity.this, MyService.class));
-        change();
+
+        restoreSettings();
 
         setting = (Button) findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ActivitySetting.class);
+                intent.setClass(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         history.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ActivityHistory.class);
+                intent.setClass(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -47,18 +47,18 @@ public class MainActivity extends Activity {
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, ActivityAdd.class);
+                intent.setClass(MainActivity.this, AddActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    void change() {
+    void restoreSettings() {
         Log.d(LOG_TAG, "Load setting");
         SharedPreferences sharedPreferences = getSharedPreferences(
                 APP_PREFERENCES, MODE_PRIVATE);
         String savedRadioS = sharedPreferences.getString(
-                KEY_RADIOBUTTON_INDEX, "");
+                PREF_SETTING_LOCALE, "");
         Locale locale = new Locale(savedRadioS);
         Locale.setDefault(locale);
         Configuration config = new Configuration();

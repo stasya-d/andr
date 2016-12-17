@@ -19,7 +19,7 @@ public class MyService extends Service {
     NotificationManager mNotificationManager;
     final int notificationID = 0;
     Notification notification;
-    Boolean boolNotif;
+    Boolean boolNotification;
 
     @Override
     public void onCreate() {
@@ -33,10 +33,10 @@ public class MyService extends Service {
             threadNotification = null;
             dummy.interrupt();
         }
-        boolNotif = true;
+        boolNotification = true;
         if (mNotificationManager != null) {
             mNotificationManager.cancelAll();
-            boolNotif = false;
+            boolNotification = false;
         }
         threadNotification = new Thread(new Runnable() {
             public void run() {
@@ -49,6 +49,7 @@ public class MyService extends Service {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                Thread.interrupted();
             }
         });
         threadNotification.start();
@@ -56,11 +57,6 @@ public class MyService extends Service {
     }
 
     void sendNotif() {
-     //   Context context = getApplicationContext();
-     //   Intent notificationIntent = new Intent(Intent.ACTION_VIEW,
-     //           Uri.parse("http://developer.alexanderklimov.ru/android/"));
-     //   PendingIntent pendingIntent = PendingIntent.getActivity(context, 0,
-     //           notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -83,7 +79,7 @@ public class MyService extends Service {
                 Notification.DEFAULT_VIBRATE;
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         mNotificationManager.notify(notificationID, notification);
-        boolNotif = true;
+        boolNotification = true;
     }
 
     public IBinder onBind(Intent arg0) {

@@ -9,19 +9,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ActivityAdd extends Activity {
+public class AddActivity extends Activity {
     Button btnAdd, btnClear;
     EditText enterHigh, enterLow, enterPulse, enterSugar, enterComment;
-    DBHelper dbHelper;
+    public DBHelper dbHelper = new DBHelper(this);
     final String LOG_TAG = "myLogs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add);
-
-        dbHelper = new DBHelper(this);
+        setContentView(R.layout.activity_add);
 
         btnAdd = (Button) findViewById(R.id.ok);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -33,9 +31,8 @@ public class ActivityAdd extends Activity {
                 enterSugar = (EditText) findViewById(R.id.sugarEnter);
                 enterComment = (EditText) findViewById(R.id.commentEnter);
 
-
                 // получаем данные из полей ввода
-                String data = (DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString());
+                String data = DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString();
                 String high = enterHigh.getText().toString();
                 String low = enterLow.getText().toString();
                 String pulse = enterPulse.getText().toString();
@@ -43,8 +40,7 @@ public class ActivityAdd extends Activity {
                 String comment = enterComment.getText().toString();
 
                 dbHelper.add(data, high, low, pulse, sugar, comment);
-                BlankOfResult blank;
-                blank = new BlankOfResult();
+                Result blank = new Result();
                 String it = blank.getAll(getString(R.string.pressure),
                         getString(R.string.pulse),
                         getString(R.string.sugar),
@@ -57,7 +53,7 @@ public class ActivityAdd extends Activity {
 
                 // закрываем подключение к БД
                 dbHelper.close();
-                startService(new Intent(ActivityAdd.this, MyService.class));
+                startService(new Intent(AddActivity.this, MyService.class));
             }
         });
 

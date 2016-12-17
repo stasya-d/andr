@@ -54,6 +54,16 @@ public class DBHelper extends SQLiteOpenHelper {
         close();
     }
 
+    public void clear() {
+        SQLiteDatabase db = getWritableDatabase();
+        // закрываем подключение к БД
+        Log.d(LOG_TAG, "--- Clear: ---");
+        // удаляем все записи
+        int clearCount = db.delete("myTable", null, null);
+        Log.d(LOG_TAG, "deleted rows count = " + clearCount);
+        close();
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + "myTable");

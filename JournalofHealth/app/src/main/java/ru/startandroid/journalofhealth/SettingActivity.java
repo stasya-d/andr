@@ -33,7 +33,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 
-public class ActivitySetting extends Activity {
+public class SettingActivity extends Activity {
 
     final String LOG_TAG = "myLogs";
     public static String APP_PREFERENCES = "APP_P";
@@ -50,7 +50,7 @@ public class ActivitySetting extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting_leng);
+        setContentView(R.layout.activity_setting);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup_leng);
         radioGroup
@@ -64,7 +64,7 @@ public class ActivitySetting extends Activity {
                 SavePreferences(KEY_RADIOBUTTON_INDEX, nowLang);
                 Log.d(LOG_TAG, "Saved settings");
                 Intent intent = new Intent();
-                intent.setClass(ActivitySetting.this, MainActivity.class);
+                intent.setClass(SettingActivity.this, MainActivity.class);
                 startActivity(intent);
                 Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.saved), Toast.LENGTH_SHORT);
                 toast.show();
@@ -75,7 +75,8 @@ public class ActivitySetting extends Activity {
         load.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 loadXML();
-                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.add) + ".", Toast.LENGTH_SHORT);
+                Toast toast =
+                        Toast.makeText(getApplicationContext(), getString(R.string.add) + ".", Toast.LENGTH_SHORT);
                 toast.show();
             }
         });
@@ -85,7 +86,8 @@ public class ActivitySetting extends Activity {
             public void onClick(View v) {
                 String stringJSON = readFile();
 
-                Toast toast = Toast.makeText(getApplicationContext(), stringJSON, Toast.LENGTH_SHORT);
+                Toast toast =
+                        Toast.makeText(getApplicationContext(), stringJSON, Toast.LENGTH_SHORT);
                 toast.show();
                 parseJson(stringJSON);
             }
@@ -235,7 +237,7 @@ public class ActivitySetting extends Activity {
                 public void endElement(String uri, String localName,
                                        String qName) throws SAXException {
                     if (qName.equalsIgnoreCase("result")) {
-                        DBHelper dbHelper = new DBHelper(ActivitySetting.this);
+                        DBHelper dbHelper = new DBHelper(SettingActivity.this);
                         dbHelper.add(tdata, thigh, tlow, tpulse, tsugar, tcomment);
                         tdata = "";
                         thigh = "";
@@ -290,7 +292,7 @@ public class ActivitySetting extends Activity {
             mainJsonObject = new JSONObject(jsonString);
             JSONArray resultsArray = mainJsonObject.getJSONArray("results");
             String numbers = "";
-            DBHelper dbHelper = new DBHelper(ActivitySetting.this);
+            DBHelper dbHelper = new DBHelper(SettingActivity.this);
             for (int i = 0; i < resultsArray.length(); i++) {
                 JSONObject res = new JSONObject(resultsArray.getString(i));
                 String data = res.getString("data");
@@ -312,7 +314,7 @@ public class ActivitySetting extends Activity {
     private String inJson() {
         String json = "{}";
         JSONArray resultsArray = new JSONArray();
-        DBHelper dbHelper = new DBHelper(ActivitySetting.this);
+        DBHelper dbHelper = new DBHelper(SettingActivity.this);
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "--- Rows in: ---");

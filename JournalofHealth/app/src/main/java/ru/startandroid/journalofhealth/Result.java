@@ -1,30 +1,30 @@
 package ru.startandroid.journalofhealth;
 
-class BlankOfResult {
+public class Result {
 
-    String data;
-    String high;
-    String low;
-    String pulse;
-    String sugar;
-    String comment;
-    String all;
+    public String data;
+    public String high;
+    public String low;
+    public String pulse;
+    public String sugar;
+    public String comment;
+    public String all;
     int quality;
 
-    BlankOfResult() {
+    Result() {
     }
 
-    BlankOfResult(String textPressure,
-                  String textPulse,
-                  String textSugar,
-                  String textComment,
-                  String data,
-                  String high,
-                  String low,
-                  String pulse,
-                  String sugar,
-                  String comment,
-                  int quality) {
+    Result(String textPressure,
+           String textPulse,
+           String textSugar,
+           String textComment,
+           String data,
+           String high,
+           String low,
+           String pulse,
+           String sugar,
+           String comment,
+           int quality) {
 
         this.data = data;
         this.high = high;
@@ -36,7 +36,7 @@ class BlankOfResult {
         this.all = getAll(textPressure, textPulse, textSugar, textComment, high, low, pulse, sugar, comment);
     }
 
-    public String getAll(String textPressure,
+    String getAll(String textPressure,
                          String textPulse,
                          String textSugar,
                          String textComment,
@@ -45,7 +45,7 @@ class BlankOfResult {
                          String pulse,
                          String sugar,
                          String comment) {
-        String allInf = new String("");
+        String allInf = "";
         Boolean first = true;
 
         if (high.length() > 0 && low.length() > 0) {
