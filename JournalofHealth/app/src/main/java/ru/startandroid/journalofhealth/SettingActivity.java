@@ -10,36 +10,25 @@ import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.view.View;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-
 import android.widget.Button;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 
 public class SettingActivity extends Activity {
 
-    final String LOG_TAG = "myLogs";
+    public static final String LOG_TAG = "myLogs";
     public static String APP_PREFERENCES = "APP_P";
     public static String nowLang;
     public static String filename = "load_results.xml";
-    public static String filenameJSON = "json1.json";
     final String KEY_RADIOBUTTON_INDEX = "locale";
     RadioGroup radioGroup;
     Button save;
@@ -84,8 +73,7 @@ public class SettingActivity extends Activity {
         loadJSON = (Button) findViewById(R.id.loadJSON);
         loadJSON.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String stringJSON = readFile();
-
+                String stringJSON = WorkFile.readFile(SettingActivity.this);
                 Toast toast =
                         Toast.makeText(getApplicationContext(), stringJSON, Toast.LENGTH_SHORT);
                 toast.show();
@@ -98,48 +86,11 @@ public class SettingActivity extends Activity {
                 String json = inJson();
                 Toast toast = Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT);
                 toast.show();
-                writeFile(json);
+                WorkFile.writeFile(json, SettingActivity.this);
             }
         });
     }
 
-    public void writeFile(String text) {
-        try {
-            // отрываем поток для записи
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-                    openFileOutput(filenameJSON, MODE_PRIVATE)));
-            // пишем данные
-            bw.write(text);
-            // закрываем поток
-            bw.close();
-            Log.d(LOG_TAG, "Файл записан");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public String readFile() {
-        String res = "";
-        try {
-            // открываем поток для чтения
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    openFileInput(filenameJSON)));
-
-            // читаем содержимое
-            String str = "";
-            while ((str = br.readLine()) != null) {
-                Log.d(LOG_TAG, "read - " + str);
-                res += str;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
-    }
 
     RadioGroup.OnCheckedChangeListener radioGroupOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
 
@@ -344,8 +295,6 @@ public class SettingActivity extends Activity {
                 } while (c.moveToNext());
                 JSONObject results = new JSONObject();
                 results.put("results", resultsArray);
-                /*{
-                    "results":*/
                 json = new String(results.toString());
                 Log.d(LOG_TAG, json);
             } catch (JSONException e) {

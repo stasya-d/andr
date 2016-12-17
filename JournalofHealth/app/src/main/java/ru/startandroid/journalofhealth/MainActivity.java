@@ -16,8 +16,8 @@ public class MainActivity extends Activity {
     Button add;
     Button setting;
     public static String APP_PREFERENCES = "APP_P";
-    static final String PREF_SETTING_LOCALE = "locale";
-    public final String LOG_TAG = "myLogs";
+    public static final String PREF_SETTING_LOCALE = "locale";
+    public static final String LOG_TAG = "myLogs";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

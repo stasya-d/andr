@@ -26,7 +26,6 @@ public class HistoryActivity extends Activity {
     private DBHelper dbHelper = new DBHelper(this);
     final String LOG_TAG = "myLogs";
     final int DIALOG_DELETE = 1;
-    public String a = "66";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
