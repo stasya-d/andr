@@ -77,13 +77,13 @@ public class SettingActivity extends Activity {
                 Toast toast =
                         Toast.makeText(getApplicationContext(), stringJSON, Toast.LENGTH_SHORT);
                 toast.show();
-                parseJson(stringJSON);
+                Json.parse(stringJSON, SettingActivity.this);
             }
         });
         saveJSON = (Button) findViewById(R.id.saveJSON);
         saveJSON.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String json = inJson();
+                String json = Json.pack(SettingActivity.this);
                 Toast toast = Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT);
                 toast.show();
                 WorkFile.writeFile(json, SettingActivity.this);
@@ -237,74 +237,5 @@ public class SettingActivity extends Activity {
         }
     }
 
-    private void parseJson(String jsonString) {
-        JSONObject mainJsonObject;
-        try {
-            mainJsonObject = new JSONObject(jsonString);
-            JSONArray resultsArray = mainJsonObject.getJSONArray("results");
-            String numbers = "";
-            DBHelper dbHelper = new DBHelper(SettingActivity.this);
-            for (int i = 0; i < resultsArray.length(); i++) {
-                JSONObject res = new JSONObject(resultsArray.getString(i));
-                String data = res.getString("data");
-                String high = res.getString("high");
-                String low = res.getString("low");
-                String pulse = res.getString("pulse");
-                String sugar = res.getString("sugar");
-                String comment = res.getString("comment");
-                dbHelper.add(data, high, low, pulse, sugar, comment);
-            }
 
-            Log.d("TEST", numbers);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private String inJson() {
-        String json = "{}";
-        JSONArray resultsArray = new JSONArray();
-        DBHelper dbHelper = new DBHelper(SettingActivity.this);
-        // подключаемся к БД
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Log.d(LOG_TAG, "--- Rows in: ---");
-        // делаем запрос всех данных из таблицы mytable, получаем Cursor
-        Cursor c = db.query("myTable", null, null, null, null, null, null);
-        // ставим позицию курсора на первую строку выборки
-        // если в выборке нет строк, вернется false
-        if (c.moveToFirst()) {
-            // определяем номера столбцов по имени в выборке
-            int dataColIndex = c.getColumnIndex("data");
-            int highColIndex = c.getColumnIndex("high");
-            int lowColIndex = c.getColumnIndex("low");
-            int pulseColIndex = c.getColumnIndex("pulse");
-            int sugarColIndex = c.getColumnIndex("sugar");
-            int commentColIndex = c.getColumnIndex("comment");
-            try {
-                do {
-                    JSONObject result = new JSONObject();
-                    result.put("data", c.getString(dataColIndex));
-                    result.put("high", c.getString(highColIndex));
-                    result.put("low", c.getString(lowColIndex));
-                    result.put("pulse", c.getString(pulseColIndex));
-                    result.put("sugar", c.getString(sugarColIndex));
-                    result.put("comment", c.getString(commentColIndex));
-                    resultsArray.put(result);
-
-                } while (c.moveToNext());
-                JSONObject results = new JSONObject();
-                results.put("results", resultsArray);
-                json = new String(results.toString());
-                Log.d(LOG_TAG, json);
-            } catch (JSONException e) {
-                Toast toast = Toast.makeText(getApplicationContext(), "!", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-        c.close();
-        // закрываем подключение к БД
-        dbHelper.close();
-        return json;
-    }
 }
