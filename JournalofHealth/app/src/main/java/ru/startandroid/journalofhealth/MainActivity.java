@@ -15,8 +15,6 @@ public class MainActivity extends Activity {
     Button history;
     Button add;
     Button setting;
-    public static String APP_PREFERENCES = "APP_P";
-    public static final String PREF_SETTING_LOCALE = "locale";
     public static final String LOG_TAG = "myLogs";
 
     @Override
@@ -56,9 +54,9 @@ public class MainActivity extends Activity {
     void restoreSettings() {
         Log.d(LOG_TAG, "Load setting");
         SharedPreferences sharedPreferences = getSharedPreferences(
-                APP_PREFERENCES, MODE_PRIVATE);
+                Preferences.APP_PREFERENCES, MODE_PRIVATE);
         String savedRadioS = sharedPreferences.getString(
-                PREF_SETTING_LOCALE, "");
+                Preferences.PREF_SETTING_LOCALE, "");
         Locale locale = new Locale(savedRadioS);
         Locale.setDefault(locale);
         Configuration config = new Configuration();

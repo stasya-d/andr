@@ -1,31 +1,26 @@
 package ru.startandroid.journalofhealth;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HistoryActivity extends Activity {
 
-    private List<Result> persons;
+    private List<Result> results;
     private RecyclerView rv;
     private Button btnDeleteAll;
     private DBHelper dbHelper = new DBHelper(this);
     final String LOG_TAG = "myLogs";
-    final int DIALOG_DELETE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +30,20 @@ public class HistoryActivity extends Activity {
         btnDeleteAll = (Button) findViewById(R.id.deleteAll);
         btnDeleteAll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showDialog(DIALOG_DELETE);
+                DeleteDialogFragment dialog = new DeleteDialogFragment();
+                dialog.show(getFragmentManager(), "delete");
+                updateList();
             }
         });
         updateList();
     }
 
-    protected void updateList() {
+    @Override
+    public void recreate() {
+        updateList();
+    }
+
+    public void updateList() {
         rv = (RecyclerView) findViewById(R.id.rv);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -53,52 +55,9 @@ public class HistoryActivity extends Activity {
         updateTextViewCount();
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == DIALOG_DELETE) {
-            AlertDialog.Builder adb = new AlertDialog.Builder(this);
-            // заголовок
-            adb.setTitle(R.string.deleting);
-            // сообщение
-            adb.setMessage(R.string.questionDelete);
-            // иконка
-            adb.setIcon(R.mipmap.ic);
-            // кнопка положительного ответа
-            adb.setPositiveButton(R.string.yes, myClickListener);
-            // кнопка отрицательного ответа
-            adb.setNegativeButton(R.string.no, myClickListener);
-            // кнопка нейтрального ответа
-            adb.setNeutralButton(R.string.cancel, myClickListener);
-            // создаем диалог
-            return adb.create();
-        }
-        return super.onCreateDialog(id);
-    }
-
-    DialogInterface.OnClickListener myClickListener = new DialogInterface.OnClickListener() {
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                // положительная кнопка
-                case Dialog.BUTTON_POSITIVE:
-
-                    dbHelper.clear();
-                    updateList();
-                    Toast.makeText(HistoryActivity.this, R.string.deleted, Toast.LENGTH_SHORT).show();
-
-                    break;
-                // негативная кнопка
-                case Dialog.BUTTON_NEGATIVE:
-                    break;
-                // нейтральная кнопка
-                case Dialog.BUTTON_NEUTRAL:
-                    break;
-            }
-        }
-    };
-
     private void initializeData() {
 
-        persons = new ArrayList<>();
+        results = new ArrayList<>();
         // подключаемся к БД
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Log.d(LOG_TAG, "--- Rows in: ---");
@@ -115,7 +74,7 @@ public class HistoryActivity extends Activity {
             int commentColIndex = c.getColumnIndex("comment");
 
             do {
-                persons.add(new Result(getString(R.string.pressure),
+                results.add(new Result(getString(R.string.pressure),
                         getString(R.string.pulse),
                         getString(R.string.sugar),
                         getString(R.string.comment),
@@ -135,16 +94,15 @@ public class HistoryActivity extends Activity {
     }
 
     private void initializeAdapter() {
-        RVAdapter adapter = new RVAdapter(persons);
+        RVAdapter adapter = new RVAdapter(results);
         rv.setAdapter(adapter);
     }
 
     private void updateTextViewCount() {
         String pluralRes =
-                this.getResources().getQuantityString(R.plurals.result, persons.size(), persons.size());
+                this.getResources().getQuantityString(R.plurals.result, results.size(), results.size());
         TextView textCountResualt = (TextView) findViewById(R.id.text_result);
         textCountResualt.setText(getString(R.string.list) + "\n" + "(" + pluralRes + ")");
 
     }
-
 }

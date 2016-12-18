@@ -2,7 +2,6 @@ package ru.startandroid.journalofhealth;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 public class SettingActivity extends Activity {
 
     public static final String LOG_TAG = "myLogs";
-    public static String APP_PREFERENCES = "APP_P";
     public static String nowLang;
     final String KEY_RADIOBUTTON_INDEX = "locale";
     RadioGroup radioGroup;
@@ -29,15 +27,15 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup_leng);
-        radioGroup
-                .setOnCheckedChangeListener(radioGroupOnCheckedChangeListener);
-
-        LoadPreferences();
+        radioGroup.setOnCheckedChangeListener(radioGroupOnCheckedChangeListener);
+        RadioButton savedCheckedRadioButton = (RadioButton) radioGroup
+                .getChildAt(Preferences.getRadioButtonIndex(SettingActivity.this));
+        savedCheckedRadioButton.setChecked(true);
 
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SavePreferences(KEY_RADIOBUTTON_INDEX, nowLang);
+                Preferences.savePreferences(KEY_RADIOBUTTON_INDEX, nowLang, SettingActivity.this);
                 Log.d(LOG_TAG, "Saved settings");
                 Intent intent = new Intent();
                 intent.setClass(SettingActivity.this, MainActivity.class);
@@ -104,28 +102,5 @@ public class SettingActivity extends Activity {
             nowLang = new String(leng);
         }
     };
-
-    private void SavePreferences(String key, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                APP_PREFERENCES, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    private void LoadPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                APP_PREFERENCES, MODE_PRIVATE);
-        int savedRadioIndex = 0;
-        String savedRadioS = sharedPreferences.getString(
-                KEY_RADIOBUTTON_INDEX, "");
-        if (savedRadioS.equals("en")) {
-            savedRadioIndex = 1;
-        }
-        RadioButton savedCheckedRadioButton = (RadioButton) radioGroup
-                .getChildAt(savedRadioIndex);
-        savedCheckedRadioButton.setChecked(true);
-        Log.d(LOG_TAG, "Load choosing: lan - " + savedRadioS);
-    }
 
 }
