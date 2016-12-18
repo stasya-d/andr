@@ -1,6 +1,6 @@
 package ru.startandroid.journalofhealth;
 
-public class Result {
+class Result {
 
     public String data;
     public String high;

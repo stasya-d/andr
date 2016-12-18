@@ -2,15 +2,19 @@ package ru.startandroid.journalofhealth;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class DBHelper extends SQLiteOpenHelper {
+import java.util.ArrayList;
+import java.util.List;
+
+class DBHelper extends SQLiteOpenHelper {
 
     final String LOG_TAG = "myLogs";
 
-    public DBHelper(Context context) {
+    DBHelper(Context context) {
         // конструктор суперкласса
         super(context, "myTable", null, 4);
     }
@@ -54,7 +58,42 @@ public class DBHelper extends SQLiteOpenHelper {
         close();
     }
 
-    public void clear() {
+    List<Result> initializeData(String pressure, String pulse, String sugar, String comment) {
+        List<Result> results;
+        results = new ArrayList<>();
+        // подключаемся к БД
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d(LOG_TAG, "--- Rows in: ---");
+        Cursor c = db.query("myTable", null, null, null, null, null, null);
+        if (c.moveToFirst()) {
+            int dateColIndex = c.getColumnIndex("data");
+            int highColIndex = c.getColumnIndex("high");
+            int lowColIndex = c.getColumnIndex("low");
+            int pulseColIndex = c.getColumnIndex("pulse");
+            int sugarColIndex = c.getColumnIndex("sugar");
+            int commentColIndex = c.getColumnIndex("comment");
+
+            do {
+                results.add(new Result(pressure,
+                        pulse,
+                        sugar,
+                        comment,
+                        c.getString(dateColIndex),
+                        c.getString(highColIndex),
+                        c.getString(lowColIndex),
+                        c.getString(pulseColIndex),
+                        c.getString(sugarColIndex),
+                        c.getString(commentColIndex),
+                        R.drawable.goodsmal));
+            } while (c.moveToNext());
+        } else
+            Log.d(LOG_TAG, "0 rows");
+        c.close();
+        this.close();
+        return results;
+    }
+
+    void clear() {
         SQLiteDatabase db = getWritableDatabase();
         // закрываем подключение к БД
         Log.d(LOG_TAG, "--- Clear: ---");

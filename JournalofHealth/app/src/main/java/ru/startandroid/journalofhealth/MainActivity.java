@@ -12,10 +12,11 @@ import android.widget.Button;
 import java.util.Locale;
 
 public class MainActivity extends Activity {
-    Button history;
-    Button add;
-    Button setting;
+
     public static final String LOG_TAG = "myLogs";
+    Button mBtnHistory;
+    Button mBtnAdd;
+    Button mBtnSetting;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,24 +26,24 @@ public class MainActivity extends Activity {
 
         restoreSettings();
 
-        setting = (Button) findViewById(R.id.setting);
-        setting.setOnClickListener(new View.OnClickListener() {
+        mBtnSetting = (Button) findViewById(R.id.setting);
+        mBtnSetting.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, SettingActivity.class);
                 startActivity(intent);
             }
         });
-        history = (Button) findViewById(R.id.history);
-        history.setOnClickListener(new View.OnClickListener() {
+        mBtnHistory = (Button) findViewById(R.id.history);
+        mBtnHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, HistoryActivity.class);
                 startActivity(intent);
             }
         });
-        add = (Button) findViewById(R.id.add);
-        add.setOnClickListener(new View.OnClickListener() {
+        mBtnAdd = (Button) findViewById(R.id.add);
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, AddActivity.class);
@@ -52,7 +53,7 @@ public class MainActivity extends Activity {
     }
 
     void restoreSettings() {
-        Log.d(LOG_TAG, "Load setting");
+        Log.d(LOG_TAG, "Load mBtnSetting");
         SharedPreferences sharedPreferences = getSharedPreferences(
                 Preferences.APP_PREFERENCES, MODE_PRIVATE);
         String savedRadioS = sharedPreferences.getString(

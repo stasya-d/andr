@@ -4,18 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by Stasya on 17.12.2016.
- */
-
-public class Json {
-    public static void parse(String jsonString, Context context) {
+class Json {
+    static void parse(String jsonString, Context context) {
         JSONObject mainJsonObject;
         try {
             mainJsonObject = new JSONObject(jsonString);
@@ -40,7 +35,7 @@ public class Json {
 
     }
 
-    public static String pack(Context context) {
+    static String pack(Context context) {
         String json = "{}";
         JSONArray resultsArray = new JSONArray();
         DBHelper dbHelper = new DBHelper(context);
@@ -73,7 +68,7 @@ public class Json {
                 } while (c.moveToNext());
                 JSONObject results = new JSONObject();
                 results.put("results", resultsArray);
-                json = new String(results.toString());
+                json = results.toString();
                 Log.d(MainActivity.LOG_TAG, json);
             } catch (JSONException e) {
                 //Toast toast = Toast.makeText(getApplicationContext(), "!", Toast.LENGTH_SHORT);

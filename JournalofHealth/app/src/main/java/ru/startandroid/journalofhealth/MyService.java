@@ -15,11 +15,12 @@ import java.util.concurrent.TimeUnit;
 
 public class MyService extends Service {
     final String LOG_TAG = "myLogs";
-    Thread threadNotification;
-    NotificationManager mNotificationManager;
     final int notificationID = 0;
-    Notification notification;
-    Boolean boolNotification;
+    private Boolean boolNotification;
+
+    Thread mThreadNotification;
+    NotificationManager mNotificationManager;
+    Notification mNtfAddResult;
 
     @Override
     public void onCreate() {
@@ -28,9 +29,9 @@ public class MyService extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (threadNotification != null) {
-            Thread dummy = threadNotification;
-            threadNotification = null;
+        if (mThreadNotification != null) {
+            Thread dummy = mThreadNotification;
+            mThreadNotification = null;
             dummy.interrupt();
         }
         boolNotification = true;
@@ -38,7 +39,7 @@ public class MyService extends Service {
             mNotificationManager.cancelAll();
             boolNotification = false;
         }
-        threadNotification = new Thread(new Runnable() {
+        mThreadNotification = new Thread(new Runnable() {
             public void run() {
                 try {
                     for (int i = 0; i < 20; i++) {
@@ -52,7 +53,7 @@ public class MyService extends Service {
                 Thread.interrupted();
             }
         });
-        threadNotification.start();
+        mThreadNotification.start();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -74,11 +75,11 @@ public class MyService extends Service {
                 );
         mBuilder.setContentIntent(resultPendingIntent);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notification = mBuilder.build();
-        notification.defaults = Notification.DEFAULT_SOUND |
+        mNtfAddResult = mBuilder.build();
+        mNtfAddResult.defaults = Notification.DEFAULT_SOUND |
                 Notification.DEFAULT_VIBRATE;
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        mNotificationManager.notify(notificationID, notification);
+        mNtfAddResult.flags |= Notification.FLAG_AUTO_CANCEL;
+        mNotificationManager.notify(notificationID, mNtfAddResult);
         boolNotification = true;
     }
 

@@ -13,27 +13,28 @@ import android.widget.Toast;
 public class SettingActivity extends Activity {
 
     public static final String LOG_TAG = "myLogs";
-    public static String nowLang;
+    private static String nowLang;
     final String KEY_RADIOBUTTON_INDEX = "locale";
-    RadioGroup radioGroup;
-    Button save;
-    private Button load;
-    private Button loadJSON;
-    private Button saveJSON;
+
+    RadioGroup mRadioGroup;
+    Button mSave;
+    Button mLoad;
+    Button mLoadJSON;
+    Button mSaveJSON;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        radioGroup = (RadioGroup) findViewById(R.id.radioGroup_leng);
-        radioGroup.setOnCheckedChangeListener(radioGroupOnCheckedChangeListener);
-        RadioButton savedCheckedRadioButton = (RadioButton) radioGroup
+        mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup_leng);
+        mRadioGroup.setOnCheckedChangeListener(radioGroupOnCheckedChangeListener);
+        RadioButton savedCheckedRadioButton = (RadioButton) mRadioGroup
                 .getChildAt(Preferences.getRadioButtonIndex(SettingActivity.this));
         savedCheckedRadioButton.setChecked(true);
 
-        save = (Button) findViewById(R.id.save);
-        save.setOnClickListener(new View.OnClickListener() {
+        mSave = (Button) findViewById(R.id.save);
+        mSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Preferences.savePreferences(KEY_RADIOBUTTON_INDEX, nowLang, SettingActivity.this);
                 Log.d(LOG_TAG, "Saved settings");
@@ -45,8 +46,8 @@ public class SettingActivity extends Activity {
             }
         });
 
-        load = (Button) findViewById(R.id.loadXML);
-        load.setOnClickListener(new View.OnClickListener() {
+        mLoad = (Button) findViewById(R.id.loadXML);
+        mLoad.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Xml.loadXML(SettingActivity.this);
                 Toast toast =
@@ -55,8 +56,8 @@ public class SettingActivity extends Activity {
             }
         });
 
-        loadJSON = (Button) findViewById(R.id.loadJSON);
-        loadJSON.setOnClickListener(new View.OnClickListener() {
+        mLoadJSON = (Button) findViewById(R.id.loadJSON);
+        mLoadJSON.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String stringJSON = WorkFile.readFile(SettingActivity.this);
                 Toast toast =
@@ -65,8 +66,8 @@ public class SettingActivity extends Activity {
                 Json.parse(stringJSON, SettingActivity.this);
             }
         });
-        saveJSON = (Button) findViewById(R.id.saveJSON);
-        saveJSON.setOnClickListener(new View.OnClickListener() {
+        mSaveJSON = (Button) findViewById(R.id.saveJSON);
+        mSaveJSON.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String json = Json.pack(SettingActivity.this);
                 Toast toast = Toast.makeText(getApplicationContext(), json, Toast.LENGTH_SHORT);
@@ -82,13 +83,13 @@ public class SettingActivity extends Activity {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            RadioButton checkedRadioButton = (RadioButton) radioGroup
+            RadioButton checkedRadioButton = (RadioButton) mRadioGroup
                     .findViewById(checkedId);
-            int checkedIndex = radioGroup.indexOfChild(checkedRadioButton);
+            int checkedIndex = mRadioGroup.indexOfChild(checkedRadioButton);
 
             Log.d(LOG_TAG, "RadioGroup choose: " + checkedIndex);
 
-            String leng = new String("");
+            String leng = "";
             switch (checkedIndex) {
                 case 0:
                     leng = "ru";
@@ -99,7 +100,7 @@ public class SettingActivity extends Activity {
                 default:
                     break;
             }
-            nowLang = new String(leng);
+            nowLang = leng;
         }
     };
 

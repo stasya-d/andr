@@ -10,10 +10,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddActivity extends Activity {
-    Button btnAdd, btnClear;
-    EditText enterHigh, enterLow, enterPulse, enterSugar, enterComment;
+
     public DBHelper dbHelper = new DBHelper(this);
     final String LOG_TAG = "myLogs";
+    EditText mEnterHigh, mEnterLow, mEnterPulse, mEnterSugar, mEnterComment;
+    Button mBtnAdd, mBtnClear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,23 +22,23 @@ public class AddActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        btnAdd = (Button) findViewById(R.id.ok);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        mBtnAdd = (Button) findViewById(R.id.ok);
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                enterHigh = (EditText) findViewById(R.id.high);
-                enterLow = (EditText) findViewById(R.id.low);
-                enterPulse = (EditText) findViewById(R.id.pulse);
-                enterSugar = (EditText) findViewById(R.id.sugarEnter);
-                enterComment = (EditText) findViewById(R.id.commentEnter);
+                mEnterHigh = (EditText) findViewById(R.id.high);
+                mEnterLow = (EditText) findViewById(R.id.low);
+                mEnterPulse = (EditText) findViewById(R.id.pulse);
+                mEnterSugar = (EditText) findViewById(R.id.sugarEnter);
+                mEnterComment = (EditText) findViewById(R.id.commentEnter);
 
                 // получаем данные из полей ввода
                 String data = DateFormat.format("dd-MM-yyyy hh:mm:ss", new java.util.Date()).toString();
-                String high = enterHigh.getText().toString();
-                String low = enterLow.getText().toString();
-                String pulse = enterPulse.getText().toString();
-                String sugar = enterSugar.getText().toString();
-                String comment = enterComment.getText().toString();
+                String high = mEnterHigh.getText().toString();
+                String low = mEnterLow.getText().toString();
+                String pulse = mEnterPulse.getText().toString();
+                String sugar = mEnterSugar.getText().toString();
+                String comment = mEnterComment.getText().toString();
 
                 dbHelper.add(data, high, low, pulse, sugar, comment);
                 Result blank = new Result();
@@ -57,19 +58,19 @@ public class AddActivity extends Activity {
             }
         });
 
-        btnClear = (Button) findViewById(R.id.cancel);
-        btnClear.setOnClickListener(new View.OnClickListener() {
+        mBtnClear = (Button) findViewById(R.id.cancel);
+        mBtnClear.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                enterHigh = (EditText) findViewById(R.id.high);
-                enterHigh.setText("");
-                enterLow = (EditText) findViewById(R.id.low);
-                enterLow.setText("");
-                enterPulse = (EditText) findViewById(R.id.pulse);
-                enterPulse.setText("");
-                enterSugar = (EditText) findViewById(R.id.sugarEnter);
-                enterSugar.setText("");
-                enterComment = (EditText) findViewById(R.id.commentEnter);
-                enterComment.setText("");
+                mEnterHigh = (EditText) findViewById(R.id.high);
+                mEnterHigh.setText("");
+                mEnterLow = (EditText) findViewById(R.id.low);
+                mEnterLow.setText("");
+                mEnterPulse = (EditText) findViewById(R.id.pulse);
+                mEnterPulse.setText("");
+                mEnterSugar = (EditText) findViewById(R.id.sugarEnter);
+                mEnterSugar.setText("");
+                mEnterComment = (EditText) findViewById(R.id.commentEnter);
+                mEnterComment.setText("");
             }
         });
     }

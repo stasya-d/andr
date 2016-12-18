@@ -12,12 +12,12 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-public class Xml {
+class Xml {
 
-    public static String filename = "load_results.xml";
+    private static final String LOAD_RESULTS_XML = "load_results.xml";
 
-    public static void loadXML(final Context context) {
-        Log.d(MainActivity.LOG_TAG, "load");
+    static void loadXML(final Context context) {
+        Log.d(MainActivity.LOG_TAG, "mLoad");
         try {
 
             SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -104,7 +104,7 @@ public class Xml {
                 }
             };
 
-            InputStream is = context.getAssets().open(filename);
+            InputStream is = context.getAssets().open(LOAD_RESULTS_XML);
             saxParser.parse(is, handler);
 
         } catch (Exception e) {

@@ -5,16 +5,15 @@ import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class WorkFile {
+class WorkFile {
 
-    private static final String FILE_NAME_JSON = "json1.json";
+    private static final String FILE_NAME_JSON = "work_file_json.json";
 
-    public static void writeFile(String text, Context context) {
+    static void writeFile(String text, Context context) {
         try {
             // отрываем поток для записи
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
@@ -24,14 +23,12 @@ public class WorkFile {
             // закрываем поток
             bw.close();
             Log.d(MainActivity.LOG_TAG, "write file");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static String readFile(Context context) {
+    static String readFile(Context context) {
         String res = "";
         try {
             // открываем поток для чтения
@@ -39,14 +36,13 @@ public class WorkFile {
                     context.openFileInput(FILE_NAME_JSON)));
 
             // читаем содержимое
-            String str = "";
+            String str;
             while ((str = br.readLine()) != null) {
                 Log.d(MainActivity.LOG_TAG, "read file - " + str);
                 res += str;
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
+            res = "{}";
             e.printStackTrace();
         }
         return res;
